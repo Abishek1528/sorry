@@ -195,7 +195,7 @@ function Page4({ onOpen }) {
 }
 
 // ----- Page 5: the typed note -----
-function Page5() {
+function Page5({ onNext }) {
   const { displayed, done } = useTypewriter(noteParagraphs)
 
   return (
@@ -232,6 +232,87 @@ function Page5() {
           <path d="M12 21s-7.5-4.6-10-9.2C.3 8.4 2 4.5 5.8 4.5c2 0 3.4 1.1 4.2 2.3.8-1.2 2.2-2.3 4.2-2.3 3.8 0 5.5 3.9 3.8 7.3C19.5 16.4 12 21 12 21z" />
         </svg>
       </div>
+
+      <button className="pink-btn" onClick={onNext}>
+        One more thing... 🥺
+      </button>
+    </div>
+  )
+}
+
+function Page6() {
+  const [yesButtonCount, setYesButtonCount] = useState(0)
+  const [accepted, setAccepted] = useState(false)
+
+  const addMoreYesButtons = () => {
+    setYesButtonCount((count) => (count === 0 ? 10 : count + 20))
+  }
+
+  return (
+    <div className="page page-6">
+      <div className="teddy-wrap page-6-teddy">
+        <div className="ring" />
+        <img
+          src="/innocent-teddy.jpg"
+          alt="An innocent teddy bear"
+          className="teddy-image"
+        />
+      </div>
+
+      <section className="question-paper" aria-label="A little question">
+        <h1 className="paper-title">A tiny question for you...</h1>
+        <p className="paper-message">
+          Ippahhh enmelaa kovam pochaahhh 🥺👉🏻👈🏻 enkitaa olungaa pesuviyaaa neee 🥹❤️ naaa
+          rombaaa paavamlaaa 😭🫂💗 ipppahhh enkitaa pesuuviyaa yashii 🥺🎀💕
+        </p>
+
+        {accepted ? (
+          <div className="accepted-message" role="status">
+            <span>You are my chellakuttyyyyy!</span>
+            <span className="popping-heart" aria-hidden="true">❤️</span>
+          </div>
+        ) : (
+          <div className="answer-actions">
+            <button
+              className="pink-btn answer-yes"
+              onClick={() => setAccepted(true)}
+            >
+              Pesuvan 💗
+            </button>
+            <button className="paper-no-btn" onClick={addMoreYesButtons}>
+              Pesamataa 🙈
+            </button>
+          </div>
+        )}
+      </section>
+
+      {yesButtonCount > 0 && !accepted && (
+        <>
+          <p className="surprise-message" role="status">
+            I knew you would click this! There is a small surprise for youuu 🎁💗
+          </p>
+          <div className="answer-field" aria-label="More Pesuvan buttons">
+            {Array.from({ length: yesButtonCount }, (_, index) => {
+              const offset = Math.sin((index + 1) * 12.9898) * 4
+              const rotation = Math.sin((index + 1) * 78.233) * 7
+
+              return (
+                <button
+                  key={index}
+                  className="pink-btn scattered-yes"
+                  style={{
+                    '--button-offset': `${offset}px`,
+                    '--button-rotation': `${rotation}deg`,
+                  }}
+                  onClick={() => setAccepted(true)}
+                >
+                  Pesuvan 💗
+                </button>
+              )
+            })}
+          </div>
+        </>
+      )}
     </div>
   )
 }
@@ -245,7 +326,8 @@ export default function App() {
       {page === 2 && <Page2 onNext={() => setPage(3)} />}
       {page === 3 && <Page3 onNext={() => setPage(4)} />}
       {page === 4 && <Page4 onOpen={() => setPage(5)} />}
-      {page === 5 && <Page5 />}
+      {page === 5 && <Page5 onNext={() => setPage(6)} />}
+      {page === 6 && <Page6 />}
 
       <button
         className="back-btn"
