@@ -1,0 +1,5 @@
+{
+  "framework": "vite",
+  "buildCommand": "chmod +x node_modules/.bin/vite && vite build",
+  "installCommand": "npm install --foreground-scripts"
+}
