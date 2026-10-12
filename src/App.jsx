@@ -245,7 +245,7 @@ function Page6() {
   const [accepted, setAccepted] = useState(false)
 
   const addMoreYesButtons = () => {
-    setYesButtonCount((count) => (count === 0 ? 10 : count + 20))
+    setYesButtonCount((count) => (count === 0 ? 3 : count + 5))
   }
 
   return (
@@ -293,7 +293,8 @@ function Page6() {
           </p>
           <div className="answer-field" aria-label="More Pesuvan buttons">
             {Array.from({ length: yesButtonCount }, (_, index) => {
-              const offset = Math.sin((index + 1) * 12.9898) * 4
+              const left = 4 + ((index * 29) % 52)
+              const top = 8 + ((index * 37) % 75)
               const rotation = Math.sin((index + 1) * 78.233) * 7
 
               return (
@@ -301,7 +302,8 @@ function Page6() {
                   key={index}
                   className="pink-btn scattered-yes"
                   style={{
-                    '--button-offset': `${offset}px`,
+                    '--button-left': `${left}%`,
+                    '--button-top': `${top}%`,
                     '--button-rotation': `${rotation}deg`,
                   }}
                   onClick={() => setAccepted(true)}
